@@ -33,25 +33,67 @@ Install the library using `go get`:
 ```bash
 go get github.com/yourusername/goisl
 
+## Usage - Basic Example
+
+### Sanitizing Email Input
+The `SanitizeEmail` function trims whitespace, validates email structure, and allows optional hooks for custom sanitization behavior.
+
+#### Basic Usage
+```go
 package main
 
 import (
     "fmt"
     "log"
-    "goisl"
+    "github.com/derickschaefer/goisl/pkg"
 )
 
 func main() {
-    // Sanitize email
-    email, err := goisl.SanitizeEmail("  user@example.com  ")
+    email, err := pkg.SanitizeEmail("  user@example.com  ", nil) // No custom hook
     if err != nil {
-        log.Fatalf("Invalid email: %v", err)
+        log.Fatalf("Error: %v", err)
     }
-    fmt.Println("Sanitized Email:", email)
+    fmt.Println("Sanitized Email:", email) // Output: user@example.com
+}
 
-    // Sanitize text field
-    cleanText := goisl.SanitizeTextField("   Hello <World>!   ")
-    fmt.Println("Sanitized Text:", cleanText)
+## Usage = Custom Hook Example
+
+package main
+
+import (
+    "errors"
+    "fmt"
+    "log"
+    "strings"
+    "github.com/derickschaefer/goisl/pkg"
+)
+
+func main() {
+    // Define a custom hook
+    customHook := func(local, domain string) (string, string, error) {
+        // Remove tags after '+'
+        if plusIndex := strings.Index(local, "+"); plusIndex != -1 {
+            local = local[:plusIndex]
+        }
+
+        // Block specific domains
+        blockedDomains := []string{"tempmail.com"}
+        domainLower := strings.ToLower(domain) // Normalize to lowercase
+        for _, blocked := range blockedDomains {
+            if domainLower == strings.ToLower(blocked) {
+                return "", "", errors.New("blocked domain")
+            }
+        }
+
+        return local, domain, nil
+    }
+
+    email, err := pkg.SanitizeEmail("user+tag@tempmail.com", customHook)
+    if err != nil {
+        log.Printf("Error: %v", err) // Output: Error: blocked domain
+    } else {
+        fmt.Println("Sanitized Email:", email)
+    }
 }
 
 package main
