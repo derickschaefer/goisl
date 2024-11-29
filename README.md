@@ -33,8 +33,6 @@ Install the library using `go get`:
 ```bash
 go get github.com/yourusername/goisl
 
-## Usage - Basic Example
-
 ### Sanitizing Email Input
 The `SanitizeEmail` function trims whitespace, validates email structure, and allows optional hooks for custom sanitization behavior.
 
@@ -56,7 +54,7 @@ func main() {
     fmt.Println("Sanitized Email:", email) // Output: user@example.com
 }
 
-## Usage = Custom Hook Example
+## Usage - Custom Hook Example
 
 package main
 
@@ -95,6 +93,30 @@ func main() {
         fmt.Println("Sanitized Email:", email)
     }
 }
+
+### Escape URL Input
+The `EscapeURL` function trims whitespace, validates URL structure, and applies optional hooks for custom escaping or sanitization behavior.
+
+#### Basic Usage
+
+package main
+
+import (
+	"fmt"
+	"log"
+	"github.com/derickschaefer/goisl/pkg"
+)
+
+func main() {
+	url := "  http://example.com/path?query=<script>  "
+	escaped, err := pkg.EscapeURL(url, "display", nil) // No custom hook
+	if err != nil {
+		log.Fatalf("Error: %v", err)
+	}
+	fmt.Println("Escaped URL:", escaped) // Output: https://example.com/path?query=%3Cscript%3E
+}
+
+## Usage - Custom Hook Example
 
 package main
 

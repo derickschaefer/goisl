@@ -69,6 +69,32 @@ func EscapeURL(input string, context string, hook URLHook) (string, error) {
 		}
 	}
 
+	// Escape query parameters
+	if len(parsed.RawQuery) > 0 {
+	    query := parsed.Query() // Parse query into a map
+	    rawQuery := make([]string, 0) // To store sanitized key-value pairs
+	    for key, values := range query {
+	        for _, value := range values {
+	            // Decode existing encoded values to avoid double encoding
+	            decodedValue, err := url.QueryUnescape(value)
+	            if err != nil {
+	                return "", errors.New("failed to decode query parameter")
+	            }
+
+	            // Escape unsafe characters manually
+	            decodedValue = strings.ReplaceAll(decodedValue, "<", "%3C")
+	            decodedValue = strings.ReplaceAll(decodedValue, ">", "%3E")
+	            decodedValue = strings.ReplaceAll(decodedValue, "&", "%26")
+	            decodedValue = strings.ReplaceAll(decodedValue, "'", "%27")
+
+	            // Add sanitized key-value pair to raw query
+	            rawQuery = append(rawQuery, key+"="+decodedValue)
+	        }
+	    }
+	    // Manually construct the RawQuery
+	    parsed.RawQuery = strings.Join(rawQuery, "&")
+	}
+
 	// Context-based transformations
 	finalURL := parsed.String()
 	if context == "display" {
