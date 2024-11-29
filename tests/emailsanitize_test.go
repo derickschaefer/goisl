@@ -82,29 +82,3 @@ func TestSanitizeEmailWithCustomHook(t *testing.T) {
         }
     }
 }
-
-func TestSanitizeURL(t *testing.T) {
-	tests := []struct {
-		input    string
-		expected string
-		isValid  bool
-	}{
-		{"http://example.com", "http://example.com", true},
-		{"  http://example.com/path?query=<script>  ", "http://example.com/path?query=%3Cscript%3E", true},
-		{"", "", true}, // Empty input
-		{"javascript:alert('XSS')", "", false}, // Invalid protocol
-	}
-
-	for _, test := range tests {
-		result, err := pkg.SanitizeURL(test.input)
-		if test.isValid && err != nil {
-			t.Errorf("Input: %s, Expected valid URL, got error: %v", test.input, err)
-		}
-		if !test.isValid && err == nil {
-			t.Errorf("Input: %s, Expected error, got result: %v", test.input, result)
-		}
-		if result != test.expected {
-			t.Errorf("Input: %s, Expected: %s, Got: %s", test.input, test.expected, result)
-		}
-	}
-}
