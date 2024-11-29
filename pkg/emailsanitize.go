@@ -29,13 +29,14 @@ func SanitizeEmail(input string, hook EmailHook) (string, error) {
 	domain := input[atIndex+1:]
 
 	// Sanitize local part
-	local = sanitizeLocalPart(local)
-	if local == "" {
-		return "", errors.New("invalid characters in local part")
+	var err error
+	local, err = sanitizeLocalPart(local)
+	if err != nil {
+		return "", err
 	}
 
 	// Sanitize domain part
-	domain, err := sanitizeDomainPart(domain)
+	domain, err = sanitizeDomainPart(domain)
 	if err != nil {
 		return "", err
 	}
@@ -52,10 +53,38 @@ func SanitizeEmail(input string, hook EmailHook) (string, error) {
 	return local + "@" + domain, nil
 }
 
-// sanitizeLocalPart removes invalid characters from the local part of the email
-func sanitizeLocalPart(local string) string {
+// sanitizeLocalPart removes invalid characters and validates the local part of the email
+func sanitizeLocalPart(local string) (string, error) {
+	// Allow quoted local parts (e.g., "test")
+	if strings.HasPrefix(local, "\"") && strings.HasSuffix(local, "\"") {
+		// Strip quotes for normalization but ensure internal validity
+		quotedContent := local[1 : len(local)-1]
+		re := regexp.MustCompile(`[^a-zA-Z0-9 !#$%&'*+/=?^_` + "`{|}~.@]" + ``)
+		normalized := re.ReplaceAllString(quotedContent, "")
+		if quotedContent != normalized {
+			return "", errors.New("invalid characters in quoted local part")
+		}
+		return quotedContent, nil
+	}
+
+	// Validate unquoted local parts
 	re := regexp.MustCompile(`[^a-zA-Z0-9!#$%&'*+/=?^_` + "`{|}~.-]" + ``)
-	return re.ReplaceAllString(local, "")
+	cleaned := re.ReplaceAllString(local, "")
+	if cleaned == "" {
+		return "", errors.New("invalid characters in local part")
+	}
+
+	// Remove consecutive dots
+	cleaned = strings.ReplaceAll(cleaned, "..", ".")
+
+	// Ensure no leading or trailing dots
+	cleaned = strings.Trim(cleaned, ".")
+
+	if cleaned == "" {
+		return "", errors.New("local part cannot be empty after sanitization")
+	}
+
+	return cleaned, nil
 }
 
 // sanitizeDomainPart sanitizes and validates the domain part of the email

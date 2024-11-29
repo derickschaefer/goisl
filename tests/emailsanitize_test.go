@@ -67,6 +67,10 @@ func TestSanitizeEmailWithCustomHook(t *testing.T) {
         {"admin+test@tempmail.com", "", false},              // Blocked domain
         {"info@allowed.com", "info@allowed.com", true},      // Valid domain
         {"test@EXAMPLE.com", "test@EXAMPLE.com", true},      // Allowed domain
+	{"\"test\"@EXAMPLE.com", "test@EXAMPLE.com", true},
+	{"test.user@example.com", "test.user@example.com", true},      // Allowed domain
+	{"test..user@EXAMPLE.com", "test.user@EXAMPLE.com", true},
+
     }
 
     for _, test := range tests {
