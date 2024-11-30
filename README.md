@@ -43,7 +43,7 @@ go get github.com/derickschaefer/goisl
 
 ### Email Sanitization
 
-```bash
+```go
 package main
 
 import (
@@ -63,7 +63,7 @@ func main() {
 
 ### URL Escaping
 
-```bash
+```go
 package main
 
 import (
@@ -83,7 +83,7 @@ func main() {
 
 ### File Name Sanitization
 
-```bash
+```go
 package main
 
 import (
