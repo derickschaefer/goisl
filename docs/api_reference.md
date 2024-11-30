@@ -1,3 +1,17 @@
+# API Reference
+
+## `SanitizeEmail`
+
+### Description:
+Sanitizes an email address by:
+- Trimming whitespace.
+- Validating its structure.
+- Allowing optional hooks for custom behavior.
+
+### Usage:
+```go
+result, err := SanitizeEmail(input, hook)
+```
 SanitizeEmail
 -------------
 Description:
