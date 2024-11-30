@@ -5,7 +5,7 @@
 `goisl` (Go Input Sanitization Library) is a lightweight and secure library designed to simplify input sanitization and escaping in Go applications. Inspired by WordPress's input-handling functions, `goisl` provides developers with intuitive tools to ensure safe and clean input processing.
 
 The library includes functions for:
-- **Sanitization**: Cleaning and validating user inputs such as text, email, and URLs.
+- **Sanitization**: Cleaning and validating user inputs such as text, email, file names, and URLs.
 - **Escaping**: Safely encoding output for various contexts such as HTML, JavaScript, and URLs.
 
 By using `goisl`, you can reduce common vulnerabilities like XSS, SQL injection, and malformed input issues.
@@ -14,130 +14,96 @@ By using `goisl`, you can reduce common vulnerabilities like XSS, SQL injection,
 
 ## Features
 
-### Sanitization Functions
-- `SanitizeTextField`: Clean text inputs by removing invalid characters and trimming whitespace.
-- `SanitizeEmail`: Validate and sanitize email addresses.
-- `SanitizeURL`: Validate and sanitize URLs for safe usage.
+### Core Functions
+- **Sanitization**:
+  - `SanitizeEmail`: Validate and sanitize email addresses.
+  - `SanitizeURL`: Validate and sanitize URLs.
+  - `SanitizeFileName`: Clean and validate file names.
+  - `HTMLSanitize`: Safely sanitize HTML content.
 
-### Escaping Functions
-- `EscapeHTML`: Escape special characters in user-generated HTML.
-- `EscapeAttribute`: Escape input for safe use in HTML attributes.
-- `EscapeURL`: Safely encode URL query parameters.
-- `EscapeJS`: Escape strings for safe inclusion in JavaScript.
+- **Escaping**:
+  - `EscapeHTML`: Escape special characters for safe HTML rendering.
+  - `EscapeURL`: Safely encode URL query parameters.
+
+### Modular Design
+- Each function is self-contained and can be used independently.
+- Support for optional custom hooks to tailor sanitization or validation rules.
 
 ---
 
 ## Installation
 
 Install the library using `go get`:
+
 ```bash
-go get github.com/yourusername/goisl
+go get github.com/derickschaefer/goisl
+```bash
 
-### Sanitizing Email Input
-The `SanitizeEmail` function trims whitespace, validates email structure, and allows optional hooks for custom sanitization behavior.
+## Usage
 
-#### Basic Usage
-```go
+### Email Sanitization
+
+```bash
 package main
 
 import (
     "fmt"
-    "log"
     "github.com/derickschaefer/goisl/pkg"
 )
 
 func main() {
-    email, err := pkg.SanitizeEmail("  user@example.com  ", nil) // No custom hook
+    email, err := pkg.SanitizeEmail(" user@example.com ", nil)
     if err != nil {
-        log.Fatalf("Error: %v", err)
-    }
-    fmt.Println("Sanitized Email:", email) // Output: user@example.com
-}
-
-## Usage - Custom Hook Example
-
-package main
-
-import (
-    "errors"
-    "fmt"
-    "log"
-    "strings"
-    "github.com/derickschaefer/goisl/pkg"
-)
-
-func main() {
-    // Define a custom hook
-    customHook := func(local, domain string) (string, string, error) {
-        // Remove tags after '+'
-        if plusIndex := strings.Index(local, "+"); plusIndex != -1 {
-            local = local[:plusIndex]
-        }
-
-        // Block specific domains
-        blockedDomains := []string{"tempmail.com"}
-        domainLower := strings.ToLower(domain) // Normalize to lowercase
-        for _, blocked := range blockedDomains {
-            if domainLower == strings.ToLower(blocked) {
-                return "", "", errors.New("blocked domain")
-            }
-        }
-
-        return local, domain, nil
-    }
-
-    email, err := pkg.SanitizeEmail("user+tag@tempmail.com", customHook)
-    if err != nil {
-        log.Printf("Error: %v", err) // Output: Error: blocked domain
+        fmt.Println("Error:", err)
     } else {
         fmt.Println("Sanitized Email:", email)
     }
 }
+```bash
 
-### Escape URL Input
-The `EscapeURL` function trims whitespace, validates URL structure, and applies optional hooks for custom escaping or sanitization behavior.
+### URL Escaping
 
-#### Basic Usage
-
-package main
-
-import (
-	"fmt"
-	"log"
-	"github.com/derickschaefer/goisl/pkg"
-)
-
-func main() {
-	url := "  http://example.com/path?query=<script>  "
-	escaped, err := pkg.EscapeURL(url, "display", nil) // No custom hook
-	if err != nil {
-		log.Fatalf("Error: %v", err)
-	}
-	fmt.Println("Escaped URL:", escaped) // Output: https://example.com/path?query=%3Cscript%3E
-}
-
-## Usage - Custom Hook Example
-
+```bash
 package main
 
 import (
     "fmt"
-    "goisl"
+    "github.com/derickschaefer/goisl/pkg"
 )
 
 func main() {
-    // Escape HTML
-    escapedHTML := goisl.EscapeHTML("<script>alert('XSS!')</script>")
-    fmt.Println("Escaped HTML:", escapedHTML)
-
-    // Escape URL
-    escapedURL := goisl.EscapeURL("https://example.com?param=<value>")
-    fmt.Println("Escaped URL:", escapedURL)
+    url, err := pkg.EscapeURL("  http://example.com/path?query=<script>  ", "display", nil)
+    if err != nil {
+        fmt.Println("Error:", err)
+    } else {
+        fmt.Println("Escaped URL:", url)
+    }
 }
+```bash
 
-Contributing
+### File Name Sanitization
 
-Contributions are welcome! If you’d like to help improve goisl, please:
+```bash
+package main
+
+import (
+    "fmt"
+    "github.com/derickschaefer/goisl/pkg"
+)
+
+func main() {
+    fileName, err := pkg.SanitizeFileName("example#@!.txt", nil)
+    if err != nil {
+        fmt.Println("Error:", err)
+    } else {
+        fmt.Println("Sanitized File Name:", fileName)
+    }
+}
+```bash
+
+## Contributing
+
+Contributions are welcome! Please:
 	1.	Fork the repository.
 	2.	Submit a pull request with a detailed description of the changes.
 

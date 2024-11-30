@@ -17,7 +17,13 @@ build:
 # Run tests
 .PHONY: test
 test:
-	go test $(TEST_DIR) -v
+	#go test $(TEST_DIR) -v
+	@go test $(TEST_DIR) -v | sed \
+		-e 's/^=== RUN\(.*\)/\x1b[34m=== RUN\1\x1b[0m/' \
+		-e 's/^--- PASS\(.*\)/\x1b[32m--- PASS\1\x1b[0m/' \
+		-e 's/^--- FAIL\(.*\)/\x1b[31m--- FAIL\1\x1b[0m/' \
+		-e 's/^PASS\(.*\)/\x1b[32mPASS\1\x1b[0m/' \
+		-e 's/^FAIL\(.*\)/\x1b[31mFAIL\1\x1b[0m/'
 
 # Run linting
 .PHONY: lint
