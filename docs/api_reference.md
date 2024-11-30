@@ -19,8 +19,9 @@ Description:
   and applying optional custom logic through a user-defined hook.
 
 Usage:
+```go
   result, err := SanitizeEmail(input, hook)
-
+```
 Parameters:
   input (string)  - The email address to sanitize.
   hook (EmailHook) [optional] - A function for custom sanitization logic.
@@ -32,14 +33,18 @@ Return Values:
 
 Custom Hook Example:
   EmailHook type:
+  ```go
     func(local, domain string) (string, string, error)
+  ```
 
 Example Usage:
+```go
   result, err := SanitizeEmail("  user@example.com  ", nil)
   if err != nil {
       log.Fatalf("Error: %v", err)
   }
   fmt.Println(result)  # Output: user@example.com
+```
 
 EscapeURL
 ---------
