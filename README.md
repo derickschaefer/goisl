@@ -37,7 +37,7 @@ Install the library using `go get`:
 
 ```bash
 go get github.com/derickschaefer/goisl
-```bash
+```
 
 ## Usage
 
@@ -59,7 +59,7 @@ func main() {
         fmt.Println("Sanitized Email:", email)
     }
 }
-```bash
+```
 
 ### URL Escaping
 
@@ -79,7 +79,7 @@ func main() {
         fmt.Println("Escaped URL:", url)
     }
 }
-```bash
+```
 
 ### File Name Sanitization
 
@@ -99,7 +99,7 @@ func main() {
         fmt.Println("Sanitized File Name:", fileName)
     }
 }
-```bash
+```
 
 ## Contributing
 
