@@ -27,27 +27,30 @@
 
 goisl/
 │
-├── README.md              # Project overview and examples
-├── LICENSE                # License file (e.g., MIT or Apache 2.0)
-├── go.mod                 # Go module file for dependency management
-├── examples/              # Example applications using the library
-│   ├── sanitize_email.go  # Email sanitization example
-│   ├── sanitize_url.go    # URL sanitization example
-│   ├── escape_html.go     # HTML escaping example
+├── README.md                    # Project overview and examples
+├── LICENSE                      # License file (e.g., MIT or Apache 2.0)
+├── go.mod                       # Go module file for dependency management
+├── examples/                    # Example applications using the library
+│   ├── sanitize_email.go        # Email sanitization example
+│   ├── sanitize_url.go          # URL sanitization example
+│   ├── escape_html.go           # HTML escaping example
 │   └── …
-├── pkg/                   # Core package implementation
-│   ├── sanitize.go        # Functions for sanitization
-│   ├── escape.go          # Functions for escaping
-│   ├── utils.go           # Utility/helper functions
-│   └── errors.go          # Custom error types and constants
-├── tests/                 # Unit tests for sanitization and escaping
-│   ├── sanitize_test.go   # Tests for sanitization functions
-│   ├── escape_test.go     # Tests for escaping functions
-│   └── …
-└── docs/                  # Documentation
-├── architecture.md        # Explanation of library design and architecture
-└── api_reference.md       # Detailed API reference
-
+├── pkg/                         # Core package implementation
+│   ├── common.go                # Common Functions used across routines
+│   ├── emailsanitize.go         # Functions for email sanitization
+│   ├── escape.go                # Functions for escaping
+│   ├── filesanitize.go          # Functions for file sanitization
+│   ├── htmlsanitize.go          # Functions for html sanitization
+│   └── urlsanitize.go           # Functions for URL sanitization
+├── tests/                       # Unit tests for sanitization and escaping
+│   ├── emailsanitize_test.go    # Tests for sanitization functions
+│   ├── escape_test.go           # Tests for escaping functions
+│   ├── filesanitize_test.go     # Tests for escaping functions
+│   ├── htmlsanitize_test.go     # Tests for escaping functions
+│   └── urlsanitize_test.go      # Functions for URL sanitization
+└── docs/                        # Documentation
+├── architecture.md              # Explanation of library design and architecture
+└── api_reference.md             # Detailed API reference
 
 ---
 
