@@ -16,6 +16,26 @@ type URLHook func(parsedURL *url.URL) (*url.URL, error)
 // EscapeAllowedProtocols defines the list of acceptable URL schemes for escaping.
 var EscapeAllowedProtocols = []string{"http", "https", "mailto", "ftp"}
 
+// EscapePlainText sanitizes plain text by removing punctuation, special characters,
+// and non-alphanumeric symbols while condensing whitespace into a single space.
+func EscapePlainText(input string) string {
+    // Trim leading and trailing whitespace
+    input = strings.TrimSpace(input)
+
+    // Replace sequences of whitespace with a single space
+    whitespaceRegex := regexp.MustCompile(`\s+`)
+    input = whitespaceRegex.ReplaceAllString(input, " ")
+
+    // Remove non-alphanumeric characters and punctuation
+    alphanumericRegex := regexp.MustCompile(`[^a-zA-Z0-9\s]`)
+    input = alphanumericRegex.ReplaceAllString(input, "")
+
+    // Trim any residual spaces after special character removal
+    input = strings.TrimSpace(input)
+
+    return input
+}
+
 // SafeEscapeHTML escapes only specific characters, excluding '%'.
 func SafeEscapeHTML(input string) string {
     replacer := strings.NewReplacer(
