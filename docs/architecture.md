@@ -1,5 +1,4 @@
 ---
-
 ### **`architecture.md`**
 ```markdown
 # Architecture of `goisl`
