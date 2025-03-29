@@ -5,7 +5,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/derickschaefer/goisl/pkg"
+	"github.com/derickschaefer/goisl"
 )
 
 // ANSI escape codes for colored text
@@ -25,7 +25,7 @@ func main() {
 	input := strings.Join(os.Args[1:], " ")
 
 	// Escape plain text
-	escaped := isl.EscapePlainText(input)
+	escaped := isl.EscapePlainText(input, nil)
 
 	// Highlight the parts removed in RED
 	highlighted := highlightDifferences(input, escaped)
