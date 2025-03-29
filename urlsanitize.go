@@ -1,7 +1,7 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.0.3
+Version: 1.0.4
 
 File: urlsanitize.go
 
@@ -10,7 +10,8 @@ Description:
     The SanitizeURL function calls EscapeURL with a "display" context to apply standard URL escaping.
 
 Change Log:
-    - v1.0.3: Rename pkg to isl and bump version numbers
+    - v1.0.4: Rename pkg to isl and bump version numbers
+    - v1.0.3: Remove conflicting license.txt file
     - v1.0.2: Licensing file modifications for publication
     - v1.0.1: Added documentation header and refined SanitizeURL.
     - v1.0.0: Initial implementation of URL sanitization wrapper.

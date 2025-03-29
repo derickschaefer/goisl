@@ -1,7 +1,7 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.0.3
+Version: 1.0.4
 
 File: escape.go
 
@@ -14,7 +14,8 @@ Description:
     applying optional custom hooks for further transformations.
 
 Change Log:
-    - v1.0.3: Rename pkg to isl and bump version numbers
+    - v1.0.4: Rename pkg to isl and bump version numbers
+    - v1.0.3: Remove conflicting license.txt file
     - v1.0.2: Licensing file modifications for publication
     - v1.0.1: Improved documentation and refined escaping functions.
     - v1.0.0: Initial implementation of escaping utilities.
