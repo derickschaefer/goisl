@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/derickschaefer/goisl/pkg"
+	"github.com/derickschaefer/goisl"
 )
 
 func TestSanitizeURL(t *testing.T) {
@@ -46,7 +46,7 @@ func TestSanitizeURL(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := pkg.SanitizeURL(test.input)
+		result, err := isl.SanitizeURL(test.input)
 		if test.isValid && err != nil {
 			t.Errorf("Input: %q, Expected valid URL, got error: %v", test.input, err)
 		}

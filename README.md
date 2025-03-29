@@ -33,7 +33,7 @@ By using `goisl`, you can reduce common vulnerabilities like XSS, SQL injection,
 
 ## Installation
 
-Install the library using `go get`:
+Install the library by importing it and using `go mod tidy`:
 
 ```bash
 go get github.com/derickschaefer/goisl
@@ -48,11 +48,11 @@ package main
 
 import (
     "fmt"
-    "github.com/derickschaefer/goisl/pkg"
+    "github.com/derickschaefer/goisl"
 )
 
 func main() {
-    email, err := pkg.SanitizeEmail(" user@example.com ", nil)
+    email, err := isl.SanitizeEmail(" user@example.com ", nil)
     if err != nil {
         fmt.Println("Error:", err)
     } else {
@@ -68,11 +68,11 @@ package main
 
 import (
     "fmt"
-    "github.com/derickschaefer/goisl/pkg"
+    "github.com/derickschaefer/goisl"
 )
 
 func main() {
-    url, err := pkg.EscapeURL("  http://example.com/path?query=<script>  ", "display", nil)
+    url, err := isl.EscapeURL("  http://example.com/path?query=<script>  ", "display", nil)
     if err != nil {
         fmt.Println("Error:", err)
     } else {
@@ -88,11 +88,11 @@ package main
 
 import (
     "fmt"
-    "github.com/derickschaefer/goisl/pkg"
+    "github.com/derickschaefer/goisl"
 )
 
 func main() {
-    fileName, err := pkg.SanitizeFileName("example#@!.txt", nil)
+    fileName, err := isl.SanitizeFileName("example#@!.txt", nil)
     if err != nil {
         fmt.Println("Error:", err)
     } else {
@@ -104,7 +104,7 @@ func main() {
 ## Contributing
 
 Contributions are welcome! Please:
-	1.	Fork the repository.
+	1.	Fork the repository. (not preferred but permissible)
 	2.	Submit a pull request with a detailed description of the changes.
 
 This project is licensed under the MIT License. See the LICENSE file for details.

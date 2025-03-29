@@ -6,4 +6,4 @@
 // URLs, and HTML.
 //
 // See README.md for examples and usage.
-package pkg
+package isl

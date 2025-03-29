@@ -1,4 +1,27 @@
-package pkg
+/*
+Package isl provides all escape and sanitize functions for the goisl library.
+
+Version: 1.0.3
+
+File: emailsanitize.go
+
+Description:
+    This file contains functions for sanitizing email addresses.
+    The SanitizeEmail function validates and cleans an email address,
+    splitting it into local and domain parts, and optionally applying a
+    custom hook for further sanitization.
+
+Change Log:
+    - v1.0.3: Rename pkg to isl and bump version numbers
+    - v1.0.2: Licensing file modifications for publication
+    - v1.0.1: Enhanced documentation and refined sanitization functions.
+    - v1.0.0: Initial implementation of email sanitization utilities.
+
+License:
+    MIT License
+*/
+
+package isl
 
 import (
 	"errors"

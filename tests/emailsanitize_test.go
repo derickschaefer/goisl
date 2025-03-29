@@ -5,7 +5,7 @@ import (
 	"testing"
 	"strings"
 
-	"github.com/derickschaefer/goisl/pkg"
+	"github.com/derickschaefer/goisl"
 )
 
 func TestSanitizeEmail(t *testing.T) {
@@ -25,7 +25,7 @@ func TestSanitizeEmail(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := pkg.SanitizeEmail(test.input, nil) // No custom hook
+		result, err := isl.SanitizeEmail(test.input, nil) // No custom hook
 		if test.isValid && err != nil {
 			t.Errorf("Expected valid email, got error: %v", err)
 		}
@@ -74,7 +74,7 @@ func TestSanitizeEmailWithCustomHook(t *testing.T) {
     }
 
     for _, test := range tests {
-        result, err := pkg.SanitizeEmail(test.input, customHook) // With custom hook
+        result, err := isl.SanitizeEmail(test.input, customHook) // With custom hook
         if test.isValid && err != nil {
             t.Errorf("Input: %s, Expected valid email, got error: %v", test.input, err)
         }

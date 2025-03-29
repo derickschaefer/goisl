@@ -1,5 +1,28 @@
+/*
+Package isl provides all escape and sanitize functions for the goisl library.
+
+Version: 1.0.3
+
+File: filesanitize.go
+
+Description:
+    This file contains functions for sanitizing file names.
+    The SanitizeFileName function cleans a file name by removing unwanted characters,
+    handling multiple extensions, preventing directory traversal, normalizing Unicode,
+    and enforcing filename length constraints. Custom hooks can be applied for further validation.
+
+Change Log:
+    - v1.0.3: Rename pkg to isl and bump version numbers
+    - v1.0.2: Licensing file modifications for publication
+    - v1.0.1: Enhanced documentation and added precompiled regex optimizations.
+    - v1.0.0: Initial implementation of file name sanitization utilities.
+
+License:
+    MIT License
+*/
+
 // filesanitize.go
-package pkg
+package isl
 
 import (
 	"errors"

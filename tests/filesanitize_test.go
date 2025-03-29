@@ -6,12 +6,12 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/derickschaefer/goisl/pkg"
+	"github.com/derickschaefer/goisl"
 )
 
 // FileTypeRestrictionHook creates a hook that restricts file types based on allowed extensions.
 // It appends an underscore to disallowed intermediate extensions and ensures the final extension is allowed.
-func FileTypeRestrictionHook(allowedExtensions []string) pkg.FileNameHook {
+func FileTypeRestrictionHook(allowedExtensions []string) isl.FileNameHook {
 	extensionSet := make(map[string]bool)
 	for _, ext := range allowedExtensions {
 		extensionSet[strings.ToLower(ext)] = true
@@ -90,7 +90,7 @@ func TestSanitizeFileName(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := pkg.SanitizeFileName(test.input, nil)
+		result, err := isl.SanitizeFileName(test.input, nil)
 		if test.isValid && err != nil {
 			t.Errorf("Input: '%s', Expected valid file name, got error: %v", test.input, err)
 		}
@@ -129,7 +129,7 @@ func TestSanitizeFileNameWithCustomHook(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := pkg.SanitizeFileName(test.input, customHook)
+		result, err := isl.SanitizeFileName(test.input, customHook)
 		if test.isValid && err != nil {
 			t.Errorf("Input: '%s', Expected valid file name, got error: %v", test.input, err)
 		}
@@ -177,7 +177,7 @@ func TestSanitizeFileNameAdditional(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := pkg.SanitizeFileName(test.input, nil)
+		result, err := isl.SanitizeFileName(test.input, nil)
 		if test.isValid && err != nil {
 			t.Errorf("Input: '%s', Expected valid file name, got error: %v", test.input, err)
 		}
@@ -207,7 +207,7 @@ func TestSanitizeFileNameOnlyDisallowedExtensions(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := pkg.SanitizeFileName(test.input, customHook)
+		result, err := isl.SanitizeFileName(test.input, customHook)
 		if test.isValid && err != nil {
 			t.Errorf("Input: '%s', Expected valid file name, got error: %v", test.input, err)
 		}
@@ -234,7 +234,7 @@ func TestSanitizeFileNameComplexPatterns(t *testing.T) {
 	}
 
 	for _, test := range tests {
-		result, err := pkg.SanitizeFileName(test.input, customHook)
+		result, err := isl.SanitizeFileName(test.input, customHook)
 		if test.isValid && err != nil {
 			t.Errorf("Input: '%s', Expected valid file name, got error: %v", test.input, err)
 		}

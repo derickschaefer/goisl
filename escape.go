@@ -1,6 +1,31 @@
+/*
+Package isl provides all escape and sanitize functions for the goisl library.
+
+Version: 1.0.3
+
+File: escape.go
+
+Description:
+    This file contains functions for escaping and sanitizing content.
+    The EscapePlainText function cleans plain text by removing unwanted characters
+    and allows customization via an optional hook. SafeEscapeHTML escapes specific
+    HTML characters without affecting '%' for use in URL contexts. Additionally,
+    EscapeURL sanitizes URLs by normalizing schemes, hosts, query parameters, and
+    applying optional custom hooks for further transformations.
+
+Change Log:
+    - v1.0.3: Rename pkg to isl and bump version numbers
+    - v1.0.2: Licensing file modifications for publication
+    - v1.0.1: Improved documentation and refined escaping functions.
+    - v1.0.0: Initial implementation of escaping utilities.
+
+License:
+    MIT License
+*/
+
 // pkg/escape.go
 
-package pkg
+package isl
 
 import (
     "errors"
@@ -16,24 +41,41 @@ type URLHook func(parsedURL *url.URL) (*url.URL, error)
 // EscapeAllowedProtocols defines the list of acceptable URL schemes for escaping.
 var EscapeAllowedProtocols = []string{"http", "https", "mailto", "ftp"}
 
-// EscapePlainText sanitizes plain text by removing punctuation, special characters,
-// and non-alphanumeric symbols while condensing whitespace into a single space.
-func EscapePlainText(input string) string {
-    // Trim leading and trailing whitespace
-    input = strings.TrimSpace(input)
+// EscapePlainTextHook defines a function signature for custom behavior.
+type EscapePlainTextHook func() []rune
 
-    // Replace sequences of whitespace with a single space
-    whitespaceRegex := regexp.MustCompile(`\s+`)
-    input = whitespaceRegex.ReplaceAllString(input, " ")
+// EscapePlainText sanitizes plain text by removing unwanted characters.
+// It allows customization through an optional hook to permit additional characters.
+func EscapePlainText(input string, hook EscapePlainTextHook) string {
+	// Trim leading and trailing whitespace
+	input = strings.TrimSpace(input)
 
-    // Remove non-alphanumeric characters and punctuation
-    alphanumericRegex := regexp.MustCompile(`[^a-zA-Z0-9\s]`)
-    input = alphanumericRegex.ReplaceAllString(input, "")
+	// Replace sequences of whitespace with a single space
+	whitespaceRegex := regexp.MustCompile(`\s+`)
+	input = whitespaceRegex.ReplaceAllString(input, " ")
 
-    // Trim any residual spaces after special character removal
-    input = strings.TrimSpace(input)
+	// Base regex to allow alphanumeric characters and spaces
+	allowedChars := "a-zA-Z0-9\\s"
 
-    return input
+	// Add custom characters from the hook
+	if hook != nil {
+		additionalChars := string(hook()) // Convert rune slice to string
+		allowedChars += regexp.QuoteMeta(additionalChars) // Escape any special regex characters
+	}
+
+	// Regex to identify disallowed characters
+	disallowedRegex := regexp.MustCompile(`[^` + allowedChars + `]`)
+
+	// Replace disallowed characters with an empty string
+	input = disallowedRegex.ReplaceAllString(input, "")
+
+	// Ensure spaces between words are not removed
+	input = whitespaceRegex.ReplaceAllString(input, " ")
+
+	// Trim any residual spaces
+	input = strings.TrimSpace(input)
+
+	return input
 }
 
 // SafeEscapeHTML escapes only specific characters, excluding '%'.

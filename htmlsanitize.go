@@ -1,4 +1,28 @@
-package pkg
+/*
+Package isl provides all escape and sanitize functions for the goisl library.
+
+Version: 1.0.3
+
+File: htmlsanitize.go
+
+Description:
+    This file contains functions for sanitizing HTML content.
+    The HTMLSanitize function cleans content by removing unwanted HTML tags,
+    attributes, and protocols, as well as normalizing entities.
+    Additional helper functions handle null byte removal, entity normalization,
+    and HTML tag sanitization.
+
+Change Log:
+    - v1.0.3: Rename pkg to isl and bump version numbers
+    - v1.0.2: Licensing file modifications for publication
+    - v1.0.1: Improved documentation and refined HTML sanitization functions.
+    - v1.0.0: Initial implementation of HTML sanitization utilities.
+
+License:
+    MIT License
+*/
+
+package isl
 
 import (
 	"regexp"
