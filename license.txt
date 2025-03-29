@@ -1,3 +1,0 @@
-// goisl: Go Input Sanitization Library
-// License: MIT (https://opensource.org/licenses/MIT)
-// Copyright 2024 Derick Schaefer
