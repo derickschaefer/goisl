@@ -28,7 +28,7 @@
 ---
 
 ## File Structure (v1.1.0)
-
+```
 goisl/
 ├── LICENSE                      # MIT license
 ├── README.md                    # Project overview and usage
@@ -68,7 +68,7 @@ goisl/
 └── docs/
     ├── architecture.md          # This file
     └── api_reference.md         # Function-by-function documentation
-
+```
 ---
 
 ## Key Components
