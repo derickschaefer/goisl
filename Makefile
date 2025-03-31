@@ -1,20 +1,15 @@
-# Variables
+# Makefile for goisl: Go Input Sanitization Library
+
+# Configurable Variables
 PROJECT_NAME := goisl
-PKG := ./...
 TEST_DIR := ./tests/...
-BIN_DIR := ./bin
 LINTER := golangci-lint
 
-# Default target
+# Default Target
 .PHONY: all
-all: build
+all: test
 
-# Build the project
-.PHONY: build
-build:
-	go build -o $(BIN_DIR)/$(PROJECT_NAME) $(PKG)
-
-# Run tests
+# Run tests with output coloring
 .PHONY: test
 test:
 	@go test $(TEST_DIR) -v | sed \
@@ -25,25 +20,8 @@ test:
 		-e 's/^FAIL\(.*\)/\x1b[31mFAIL\1\x1b[0m/'
 	@$(MAKE) examples-test
 
-# Run linting
-.PHONY: lint
-lint:
-	$(LINTER) run
-
-# Clean generated files
-.PHONY: clean
-clean:
-	rm -rf $(BIN_DIR)
-
-# Install dependencies
-.PHONY: install
-install:
-	go mod tidy
-	$(LINTER) install
-
 # Run CLI example validations
 .PHONY: examples-test
-
 examples-test:
 	@echo "🔍 Running CLI example validations..."
 	@go run examples/api_key_format.go --apikey=sk-1234567890abcdef
@@ -71,3 +49,18 @@ examples-test:
 	@go run examples/plaintext_escape.go --input="Hello, World!"
 	@go run examples/plaintext_escape.go --input="<script>alert(1)</script>"
 	@echo "✅ CLI example validations completed."
+
+# Lint codebase
+.PHONY: lint
+lint:
+	$(LINTER) run
+
+# Clean up generated artifacts (if any)
+.PHONY: clean
+clean:
+	rm -rf ./bin
+
+# Ensure deps are tidy
+.PHONY: tidy
+tidy:
+	go mod tidy
