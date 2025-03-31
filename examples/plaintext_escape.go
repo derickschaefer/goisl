@@ -1,3 +1,14 @@
+// plaintext_escape.go
+
+/*
+Purpose: A basic example demonstrating how to escape plain text input using
+the Go Input Sanitization Library (goisl)
+
+Examples:
+    go run plaintext_escape.go --text="Hello, world!"
+    go run plaintext_escape.go --text="Clean me up 💥💣🔥!"
+*/
+
 package main
 
 import (

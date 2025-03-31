@@ -58,3 +58,35 @@ func TestSanitizeURL(t *testing.T) {
 		}
 	}
 }
+
+func TestSanitizeURLBasic(t *testing.T) {
+	input := " https://golang.org/search?q=<query> "
+	expected := "https://golang.org/search?q=%3Cquery%3E"
+
+	result, err := isl.SanitizeURLBasic(input)
+	if err != nil {
+		t.Fatalf("Expected no error, got: %v", err)
+	}
+	if result != expected {
+		t.Errorf("Expected: %q, Got: %q", expected, result)
+	}
+}
+
+func TestMustSanitizeURLBasic(t *testing.T) {
+	// Valid input
+	input := "https://google.com"
+	expected := "https://google.com"
+	result := isl.MustSanitizeURLBasic(input)
+	if result != expected {
+		t.Errorf("Expected: %q, Got: %q", expected, result)
+	}
+
+	// Invalid input (should panic)
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Expected panic for invalid URL, but did not panic")
+		}
+	}()
+
+	_ = isl.MustSanitizeURLBasic("javascript:alert(1)")
+}

@@ -249,3 +249,35 @@ func TestSanitizeFileNameComplexPatterns(t *testing.T) {
 		}
 	}
 }
+
+func TestSanitizeFileNameBasic(t *testing.T) {
+	input := "  good_file--name..txt "
+	expected := "good_file-name.txt"
+
+	result, err := isl.SanitizeFileNameBasic(input)
+	if err != nil {
+		t.Fatalf("Expected no error, got: %v", err)
+	}
+	if result != expected {
+		t.Errorf("Expected: '%s', Got: '%s'", expected, result)
+	}
+}
+
+func TestMustSanitizeFileNameBasic(t *testing.T) {
+	// Valid file name (should not panic)
+	valid := "clean-name.pdf"
+	expected := "clean-name.pdf"
+	result := isl.MustSanitizeFileNameBasic(valid)
+	if result != expected {
+		t.Errorf("Expected: '%s', Got: '%s'", expected, result)
+	}
+
+	// Invalid file name (should panic)
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Expected panic for invalid file name, but did not panic")
+		}
+	}()
+
+	_ = isl.MustSanitizeFileNameBasic("..") // should trigger panic
+}

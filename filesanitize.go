@@ -1,7 +1,7 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.0.4
+Version: 1.1.0
 
 File: filesanitize.go
 
@@ -10,8 +10,10 @@ Description:
     The SanitizeFileName function cleans a file name by removing unwanted characters,
     handling multiple extensions, preventing directory traversal, normalizing Unicode,
     and enforcing filename length constraints. Custom hooks can be applied for further validation.
+    Additional variants are included for basic and must-use sanitization scenarios.
 
 Change Log:
+    - v1.1.0: Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
     - v1.0.4: Rename pkg to isl and bump version numbers
     - v1.0.3: Remove conflicting license.txt file
     - v1.0.2: Licensing file modifications for publication
@@ -22,7 +24,6 @@ License:
     MIT License
 */
 
-// filesanitize.go
 package isl
 
 import (
@@ -30,6 +31,7 @@ import (
 	"regexp"
 	"strings"
 	"unicode"
+	"fmt"
 
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
@@ -43,6 +45,20 @@ type FileNameHook func(filename string) (string, error)
 const (
 	MaxFileNameLength = 255
 )
+
+// SanitizeFileNameBasic sanitizes a filename with default settings and no custom hook.
+func SanitizeFileNameBasic(input string) (string, error) {
+	return SanitizeFileName(input, nil)
+}
+
+// MustSanitizeFileNameBasic is a fail-fast wrapper that panics if SanitizeFileNameBasic returns an error.
+func MustSanitizeFileNameBasic(input string) string {
+	result, err := SanitizeFileName(input, nil)
+	if err != nil {
+		panic(fmt.Sprintf("invalid file name input: %v", err))
+	}
+	return result
+}
 
 // Precompiled regular expressions for efficiency
 var (

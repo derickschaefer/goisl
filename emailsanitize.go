@@ -1,7 +1,7 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.0.4
+Version: 1.1.0
 
 File: emailsanitize.go
 
@@ -9,9 +9,12 @@ Description:
     This file contains functions for sanitizing email addresses.
     The SanitizeEmail function validates and cleans an email address,
     splitting it into local and domain parts, and optionally applying a
-    custom hook for further sanitization.
+    custom hook for further sanitization. It supports both standard and
+    minimal (basic) modes, as well as a panic-on-failure variant for
+    strict enforcement.
 
 Change Log:
+    - v1.1.0: Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
     - v1.0.4: Rename pkg to isl and bump version numbers
     - v1.0.3: Remove conflicting license.txt file
     - v1.0.2: Licensing file modifications for publication
@@ -28,10 +31,25 @@ import (
 	"errors"
 	"regexp"
 	"strings"
+	"fmt"
 )
 
 // EmailHook defines a function signature for custom email sanitization.
 type EmailHook func(local, domain string) (string, string, error)
+
+// SanitizeEmailBasic sanitizes the email input using default behavior (no hook).
+func SanitizeEmailBasic(input string) (string, error) {
+	return SanitizeEmail(input, nil)
+}
+
+// MustSanitizeEmailBasic is a fail-fast wrapper that panics if SanitizeEmailBasic returns an error.
+func MustSanitizeEmailBasic(input string) string {
+	result, err := SanitizeEmail(input, nil)
+	if err != nil {
+		panic(fmt.Sprintf("invalid email input: %v", err))
+	}
+	return result
+}
 
 // SanitizeEmail sanitizes an email address with optional hooks for custom behavior.
 func SanitizeEmail(input string, hook EmailHook) (string, error) {

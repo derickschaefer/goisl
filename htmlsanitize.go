@@ -1,18 +1,19 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.0.4
+Version: 1.1.0
 
 File: htmlsanitize.go
 
 Description:
     This file contains functions for sanitizing HTML content.
-    The HTMLSanitize function cleans content by removing unwanted HTML tags,
-    attributes, and protocols, as well as normalizing entities.
-    Additional helper functions handle null byte removal, entity normalization,
-    and HTML tag sanitization.
+    The HTMLSanitize function removes unwanted HTML tags, attributes, and protocols,
+    while normalizing entities and eliminating null bytes.
+    Additional helper functions provide tag-based cleanup, attribute filtering, and
+    optional customization through user-defined tag policies.
 
 Change Log:
+    - v1.1.0: Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
     - v1.0.4: Rename pkg to isl and bump version numbers
     - v1.0.3: Remove conflicting license.txt file
     - v1.0.2: Licensing file modifications for publication
@@ -42,6 +43,16 @@ var AllowedHTML = map[string][]string{
 	"b":    nil,            // No attributes allowed
 	"a":    {"href"},       // Allow only href
 	"img":  {"src", "alt"}, // Allow src and alt
+}
+
+// HTMLSanitizeBasic sanitizes HTML using the default allowed HTML map.
+func HTMLSanitizeBasic(content string) string {
+	return HTMLSanitize(content, AllowedHTML)
+}
+
+// MustHTMLSanitizeBasic runs HTMLSanitize using the default AllowedHTML rules.
+func MustHTMLSanitizeBasic(content string) string {
+	return HTMLSanitize(content, AllowedHTML)
 }
 
 // HTMLSanitize sanitizes content by removing unwanted HTML tags, attributes, and protocols.

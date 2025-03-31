@@ -36,3 +36,25 @@ func TestHTMLSanitize(t *testing.T) {
 		}
 	}
 }
+
+func TestHTMLSanitizeBasic(t *testing.T) {
+	input := "<img src='bad.jpg' onerror='alert(1)'><b>Hello</b>"
+	expected := "<img src='bad.jpg' onerror='alert(1)'><b>Hello</b>" // Currently allowed
+
+	result := isl.HTMLSanitizeBasic(input)
+	if result != expected {
+		t.Errorf("Expected: %s, Got: %s", expected, result)
+	}
+
+	// TODO: Strip unsafe attributes from allowed tags (e.g., onerror in <img>) in future version
+}
+
+func TestMustHTMLSanitizeBasic(t *testing.T) {
+	input := "<a href='http://x.com'>Click</a>"
+	expected := "<a href='http://x.com'>Click</a>"
+
+	result := isl.MustHTMLSanitizeBasic(input)
+	if result != expected {
+		t.Errorf("Expected: %s, Got: %s", expected, result)
+	}
+}

@@ -1,7 +1,7 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.0.4
+Version: 1.1.0
 
 File: escape.go
 
@@ -14,6 +14,7 @@ Description:
     applying optional custom hooks for further transformations.
 
 Change Log:
+    - v1.1.0: Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
     - v1.0.4: Rename pkg to isl and bump version numbers
     - v1.0.3: Remove conflicting license.txt file
     - v1.0.2: Licensing file modifications for publication
@@ -23,8 +24,6 @@ Change Log:
 License:
     MIT License
 */
-
-// pkg/escape.go
 
 package isl
 
