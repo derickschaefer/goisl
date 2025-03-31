@@ -239,6 +239,9 @@ func main() {
     }
 }
 ```
+🧪 **Want more?**  
+Explore real-world format hooks (e.g., UUIDs, API keys, Twitter handles) in the  
+👉 [`examples/README.md`](./examples/README.md)
 
 ## Contributing
 
