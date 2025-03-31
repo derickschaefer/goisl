@@ -225,5 +225,6 @@ func main() {
 Contributions are welcome! Please:
 	1.	Fork the repository. (not preferred but permissible)
 	2.	Submit a pull request with a detailed description of the changes.
+    3.  Please share custom hook examples to grow that repository.
 
 This project is licensed under the MIT License. See the LICENSE file for details.
