@@ -12,6 +12,26 @@ Inspired by WordPress’s input-handling philosophy, `goisl` encourages a “san
 
 By using `goisl`, you can reduce the risk of malformed input, injection attacks, and XSS vulnerabilities while maintaining clean, consistent input handling across your Go applications.
 
+--- 
+
+## Platform Support
+
+`goisl` is tested and verified on multiple platforms and architectures, including:
+
+- 🐧 Ubuntu 20.04, 22.04, and 24.04 LTS
+- 🐳 Debian (Bullseye, Bookworm), CentOS Stream 9, Fedora, OS X
+- 💻 AMD64, ARM64 (e.g., Raspberry Pi), Intel and Apple Silicon
+
+### Minimum Go Version
+
+The minimum supported Go version is:
+
+```
+Go 1.18
+```
+
+This version is chosen based on the **default Go release installed on the oldest supported Ubuntu LTS version** at the time of release. Future `goisl` releases will follow this standard to ensure wide compatibility across cloud, desktop, and server environments.
+
 ---
 
 ## Features
