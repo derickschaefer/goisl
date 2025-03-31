@@ -20,7 +20,7 @@ By using `goisl`, you can reduce the risk of malformed input, injection attacks,
 
 - 🐧 Ubuntu 20.04, 22.04, and 24.04 LTS
 - 🐳 Debian (Bullseye, Bookworm), CentOS Stream 9, Fedora, OS X
-- 💻 AMD64, ARM64 (e.g., Raspberry Pi), Intel and Apple Silicon
+- 💻 AMD64, ARM64 (e.g., Raspberry Pi), Intel, and Apple Silicon
 
 ### Minimum Go Version
 
