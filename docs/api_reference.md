@@ -1,189 +1,172 @@
-# API Reference
+# API Reference (v1.1.0)
 
-## `SanitizeEmail`
+This reference documents all available functions in the `goisl` sanitization library, including new additions in v1.1.0.
 
-### Description:
-Sanitizes an email address by:
-- Trimming whitespace.
-- Validating its structure.
-- Allowing optional hooks for custom behavior.
+---
 
-### Usage:
-```go
-result, err := SanitizeEmail(input, hook)
-```
 SanitizeEmail
 -------------
+
 Description:
-  Sanitizes an email address by trimming whitespace, validating its structure,
-  and applying optional custom logic through a user-defined hook.
+  Trims, validates, and sanitizes an email address. Supports optional custom hooks for domain filtering or alias stripping.
 
 Usage:
-```go
   result, err := SanitizeEmail(input, hook)
-```
+
 Parameters:
-  input (string)  - The email address to sanitize.
-  hook (EmailHook) [optional] - A function for custom sanitization logic.
-                                Defaults to nil if not provided.
+  - input (string): The email address to sanitize.
+  - hook (EmailHook): Optional. Function: func(local, domain string) (string, string, error)
 
-Return Values:
-  - result (string): The sanitized email address.
-  - err (error): An error if the input is invalid or fails custom hook validation.
+Returns:
+  - string: Sanitized email
+  - error: Error if invalid or rejected by hook
 
-Custom Hook Example:
-  EmailHook type:
-  ```go
-    func(local, domain string) (string, string, error)
-  ```
+Basic Wrapper:
+  result, err := SanitizeEmailBasic(input)
+  result := MustSanitizeEmailBasic(input)
 
-Example Usage:
-```go
-  result, err := SanitizeEmail("  user@example.com  ", nil)
-  if err != nil {
-      log.Fatalf("Error: %v", err)
-  }
-  fmt.Println(result)  # Output: user@example.com
-```
+Example:
+  email, err := SanitizeEmail("  user@example.com  ", nil)
+
+---
+
+SanitizeFileName
+-----------------
+
+Description:
+  Sanitizes a file name by removing unsafe characters, limiting length, and enforcing structure. Supports custom hooks for extension whitelists.
+
+Usage:
+  result, err := SanitizeFileName(input, hook)
+
+Parameters:
+  - input (string): Raw file name
+  - hook (FileNameHook): Optional. Function: func(filename string) (string, error)
+
+Returns:
+  - string: Cleaned file name
+  - error: Validation failure
+
+Basic Wrapper:
+  result, err := SanitizeFileNameBasic(input)
+  result := MustSanitizeFileNameBasic(input)
+
+---
+
+SanitizeURL
+-----------
+
+Description:
+  Validates and sanitizes a URL string. Applies optional transformation logic via hook.
+
+Usage:
+  result, err := SanitizeURL(input)
+
+Returns:
+  - string: Sanitized URL
+  - error: Error if URL is invalid
+
+Basic Wrapper:
+  result, err := SanitizeURLBasic(input)
+  result := MustSanitizeURLBasic(input)
+
+---
 
 EscapeURL
 ---------
+
 Description:
-  Sanitizes and escapes a URL for safe use, trimming whitespace, validating its structure,
-  and optionally applying custom logic through a user-defined hook.
+  Escapes and normalizes a URL for safe use in UI or logic. Optionally allows URL mutation through a hook.
 
 Usage:
-```go
   result, err := EscapeURL(input, context, hook)
-```
 
 Parameters:
-  input (string)   - The URL to sanitize and escape.
-  context (string) - The context for escaping (e.g., "display" for HTML output).
-  hook (URLHook) [optional] - A function for custom URL transformation logic.
-                              Defaults to nil if not provided.
+  - input (string): Raw URL
+  - context (string): Escaping context (e.g., "display")
+  - hook (URLHook): Optional. Function: func(parsedURL *url.URL) (*url.URL, error)
 
-Return Values:
-  - result (string): The sanitized and escaped URL.
-  - err (error): An error if the input URL is invalid or fails custom hook validation.
+Returns:
+  - string: Escaped and transformed URL
+  - error: Validation error or hook rejection
 
-Custom Hook Example:
-  URLHook type:
-  ```go
-    func(parsedURL *url.URL) (*url.URL, error)
-```
+Example:
+  url, err := EscapeURL("http://example.com?q=<script>", "display", nil)
 
-Example Usage:
-  Basic:
-  ```go
-    result, err := EscapeURL("  http://example.com/path?query=<script>  ", "display", nil)
-    if err != nil {
-        log.Fatalf("Error: %v", err)
-    }
-    fmt.Println(result)  # Output: http://example.com/path?query=%3Cscript%3E
-  ```
-  With Custom Hook:
-  ```go
-    customHook := func(parsedURL *url.URL) (*url.URL, error) {
-        if parsedURL.Scheme == "http" {
-            parsedURL.Scheme = "https"
-        }
-        query := parsedURL.Query()
-        if _, exists := query["tracking_id"]; exists {
-            return nil, errors.New("tracking_id is not allowed")
-        }
-        return parsedURL, nil
-    }
-    result, err := EscapeURL("http://example.com/path?tracking_id=12345", "display", customHook)
-    if err != nil {
-        fmt.Println("Error:", err)  # Output: Error: tracking_id is not allowed
-    } else {
-        fmt.Println(result)
-    }
-  ```
-## SanitizeURL
+---
 
-### Description:
+HTMLSanitize
+------------
 
-Validates and escapes a URL by:
-	•	Trimming whitespace.
-	•	Validating its structure.
-	•	Optionally applying a custom hook.
+Description:
+  Sanitizes HTML content by removing disallowed tags and attributes.
 
-### Usage:
-```go
-result, err := EscapeURL(input, context, hook)
-```
+Usage:
+  result := HTMLSanitize(input, allowedTags)
+
 Parameters:
+  - input (string): Raw HTML
+  - allowedTags (map[string][]string): Tag whitelist, e.g., {"b": nil, "a": {"href"}}
 
-	•	input (string): The URL to sanitize.
-	•	context (string): Escaping context (e.g., “display”).
-	•	hook (URLHook, optional): A custom function for additional validation.
+Returns:
+  - string: Sanitized HTML
 
-Return Values:
+Basic Wrapper:
+  HTMLSanitizeBasic(input)
 
-	•	result (string): The sanitized URL.
-	•	err (error): An error if validation fails.
+Must Wrapper:
+  MustHTMLSanitizeBasic(input)
 
-## SanitizeFileName
+---
 
-### Description:
+EscapePlainText
+---------------
 
-Sanitizes a file name by:
-	•	Removing unsafe characters.
-	•	Normalizing Unicode characters.
-	•	Ensuring file name constraints.
+Description:
+  Escapes a string to plain, printable characters. Optional hook allows certain characters.
 
-### Usage:
- 
-```go
-result, err := SanitizeFileName(input, hook)
-```
+Usage:
+  result := EscapePlainText(input, hook)
+
 Parameters:
+  - input (string): Input text
+  - hook (EscapePlainTextHook): Optional. Function: func() []rune
 
-	•	input (string): The file name to sanitize.
-	•	hook (FileNameHook, optional): A custom function for additional validation.
+Returns:
+  - string: Escaped plain text
 
-Return Values:
+---
 
-	•	result (string): The sanitized file name.
-	•	err (error): An error if validation fails.
+CLI Flag Bindings (pflag)
+--------------------------
 
-## HTMLSanitize
+BindSanitizedFlag
+  Binds and sanitizes a CLI flag with any compatible `SanitizeX` function.
 
-### Description:
+  Usage:
+    email := isl.BindSanitizedFlag("email", "", "Email", SanitizeEmailBasic)
 
-Sanitizes HTML content by:
-	•	Removing unsafe tags and attributes.
-	•	Normalizing HTML entities.
+BindSanitizedTextFlag
+  Variant for plain text with `EscapePlainText`.
 
-### Usage:
-```go
-result := HTMLSanitize(input)
-```
-Parameters:
+  Usage:
+    comment := isl.BindSanitizedTextFlag("comment", "", "Comment")
 
-	•	input (string): The HTML content to sanitize.
+Flag Access:
+  - `flag.Get()` returns (value, error)
+  - `flag.MustGet()` panics on error
 
-Return Values:
+---
 
-	•	result (string): The sanitized HTML content.
+IsAllowedProtocol
+-----------------
 
-## IsAllowedProtocol
+Description:
+  Validates that a URL scheme is in the allowlist.
 
-### Description:
+Usage:
+  result := IsAllowedProtocol("ftp", allowedList)
 
-Validates URL schemes against an allowed list.
+Returns:
+  - bool
 
-### Usage:
-```go
-result := IsAllowedProtocol(scheme, allowedProtocols)
-```
-Parameters:
-
-	•	scheme (string): The URL scheme to validate.
-	•	allowedProtocols ([]string): A list of allowed protocols.
-
-Return Values:
-
-	•	result (bool): True if the scheme is allowed, false otherwise.
