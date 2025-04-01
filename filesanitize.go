@@ -28,10 +28,10 @@ package isl
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strings"
 	"unicode"
-	"fmt"
 
 	"golang.org/x/text/transform"
 	"golang.org/x/text/unicode/norm"
@@ -64,22 +64,22 @@ func MustSanitizeFileNameBasic(input string) string {
 var (
 	// Removes special characters except for alphanumerics, hyphens, underscores, and dots
 	specialCharsRegex = regexp.MustCompile(`[?[\]\/\\=<>:;,'"&$#*()|~` + "`" + `!{}%@‘«»”“]`)
-	
+
 	// Replaces any sequence of whitespace characters with a single hyphen
 	whitespaceRegex = regexp.MustCompile(`[\s\r\n\t]+`)
-	
+
 	// Condenses multiple hyphens into a single hyphen
 	multipleHyphensRegex = regexp.MustCompile(`\-{2,}`)
-	
+
 	// Removes hyphens immediately preceding a dot
 	hyphenBeforeDotRegex = regexp.MustCompile(`-\.`)
-	
+
 	// Condenses multiple dots into a single dot
 	multipleDotsRegex = regexp.MustCompile(`\.{2,}`)
 
 	// Condenses multiple underscores into a single underscore
 	multipleUnderscoresRegex = regexp.MustCompile(`_{2,}`)
-	
+
 	// Ensures the sanitized filename contains only allowed characters
 	sanitizationRegexMatch = regexp.MustCompile(`^[a-zA-Z0-9\-_\.]+$`)
 )
@@ -88,7 +88,7 @@ var (
 // preventing directory traversal, normalizing Unicode characters, and enforcing filename length constraints.
 // An optional custom hook can be applied for additional validation or transformation.
 func SanitizeFileName(input string, hook FileNameHook) (string, error) {
-	
+
 	// Step 0: Check for '..' in the original input to prevent directory traversal
 	//if strings.Contains(input, "..") {
 	//	return "", errors.New("invalid file name: directory traversal detected")

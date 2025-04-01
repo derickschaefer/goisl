@@ -29,9 +29,9 @@ package isl
 
 import (
 	"errors"
+	"fmt"
 	"regexp"
 	"strings"
-	"fmt"
 )
 
 // EmailHook defines a function signature for custom email sanitization.

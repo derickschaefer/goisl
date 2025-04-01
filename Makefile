@@ -60,6 +60,12 @@ lint:
 clean:
 	rm -rf ./bin
 
+# Format all Go files with gofmt
+.PHONY: fmt
+fmt:
+	@gofmt -s -w .
+	@echo "✅ Code formatted using gofmt -s"
+
 # Ensure deps are tidy
 .PHONY: tidy
 tidy:

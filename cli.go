@@ -58,8 +58,8 @@ func (f *SanitizedStringFlag) MustGet() string {
 
 // SanitizedTextFlag represents a plain text flag bound to pflag and auto-sanitized.
 type SanitizedTextFlag struct {
-	raw   *string
-	hook  EscapePlainTextHook
+	raw  *string
+	hook EscapePlainTextHook
 }
 
 // BindSanitizedTextFlag registers a flag that will be sanitized using EscapePlainText.

@@ -86,7 +86,7 @@ func TestSanitizeFileName(t *testing.T) {
 
 		// Exceeding Maximum Length (255 characters)
 		{strings.Repeat("a", 251) + ".txt", strings.Repeat("a", 251) + ".txt", true}, // 255 chars
-		{strings.Repeat("a", 252) + ".txt", "", false},                             // 256 chars
+		{strings.Repeat("a", 252) + ".txt", "", false},                               // 256 chars
 	}
 
 	for _, test := range tests {

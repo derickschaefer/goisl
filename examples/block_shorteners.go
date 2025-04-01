@@ -1,7 +1,7 @@
 // Example: Block URL Shorteners with a Custom Hook (Flag-Based)
 //
 // This CLI-style example accepts a --url flag and checks the input against
-// a list of known URL shorteners using a custom goisl hook. If the URL is 
+// a list of known URL shorteners using a custom goisl hook. If the URL is
 // from a disallowed domain, the program will return an error.
 //
 // Usage:

@@ -15,7 +15,7 @@ Description:
 Change Log:
     - v1.1.0: Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
     - v1.0.4: Rename pkg to isl and bump version numbers
-    - v1.0.3: Remove conflicting license.txt file 
+    - v1.0.3: Remove conflicting license.txt file
     - v1.0.2: Licensing file modifications for publication
     - v1.0.1: Improved documentation and refined the IsAllowedProtocol function.
     - v1.0.0: Initial implementation of protocol checking utility.

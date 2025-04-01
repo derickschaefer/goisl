@@ -40,9 +40,9 @@ var SanitizeAllowedProtocols = []string{
 
 // AllowedHTML defines allowed tags and their permitted attributes.
 var AllowedHTML = map[string][]string{
-	"b":    nil,            // No attributes allowed
-	"a":    {"href"},       // Allow only href
-	"img":  {"src", "alt"}, // Allow src and alt
+	"b":   nil,            // No attributes allowed
+	"a":   {"href"},       // Allow only href
+	"img": {"src", "alt"}, // Allow src and alt
 }
 
 // HTMLSanitizeBasic sanitizes HTML using the default allowed HTML map.
