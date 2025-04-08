@@ -33,7 +33,7 @@ func censorProfanity(input string) string {
 
 func profanityHook() []rune {
 	// Allow a few extra symbols that are not profane
-	return []rune("!@#$%^&*()-_=+[]{}|;:,.?/") 
+	return []rune("!@#$%^&*()-_=+[]{}|;:,.?/")
 }
 
 func main() {

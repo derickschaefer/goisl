@@ -5,10 +5,12 @@
 // offensive words.
 //
 // Usage:
-//   go run censor_profanity.go --text="what the hell is this damn thing"
+//
+//	go run censor_profanity.go --text="what the hell is this damn thing"
 //
 // Example Output:
-//   ✅ Sanitized Text: what the h*** is this d*** thing?
+//
+//	✅ Sanitized Text: what the h*** is this d*** thing?
 package main
 
 import (
