@@ -60,7 +60,7 @@ This version is chosen based on the **default Go release installed on the oldest
 
 ---
 
-## New in v1.1.0
+## New in v1.1.1
 
 - 🧩 `SanitizeXBasic` helpers: Simple wrappers with default rules and no hooks.
 - 🚨 `MustSanitizeXBasic`: Panic-on-failure versions for CLI defaults or enforced logic.
