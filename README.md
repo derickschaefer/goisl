@@ -65,7 +65,7 @@ This version is chosen based on the **default Go release installed on the oldest
 - 🧩 `SanitizeXBasic` helpers: Simple wrappers with default rules and no hooks.
 - 🚨 `MustSanitizeXBasic`: Panic-on-failure versions for CLI defaults or enforced logic.
 - ✅ `BindSanitizedFlag` and `BindSanitizedTextFlag`: Bind input flags with automatic sanitization via `pflag`.
-- 🧪 100% unit test coverage with extensive edge case testing.
+- 🧪 86.5% unit test coverage and 16 custom hook example cases tested on 6 OS platforms.
 - 🌟 Dozens of real-world override examples (API keys, crypto, social handles, and more).
 
 ---
