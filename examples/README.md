@@ -30,6 +30,7 @@ These examples demonstrate how to create custom sanitization hooks for specific 
 - [`block_shortener.go`](./block_shortener.go): Disallows a URL input that is a known URL shortener.
 - [`crypto_btc_address.go`](./crypto_btc_address.go): Validates Bitcoin addresses starting with `1`, `3`, or `bc1`.
 - [`guid_format.go`](./guid_format.go): Validates GUID-style identifiers using a custom format check.
+- [`german_filename.go`](./german_filename.go): Demonstrates transliteration of German characters (e.g., umlauts and ß) in filenames using a custom sanitization hook.
 
 ---
 

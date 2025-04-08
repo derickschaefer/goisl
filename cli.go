@@ -2,7 +2,7 @@
 Package isl provides command-line interface helpers and sanitized flag bindings
 for the goisl library.
 
-Version: 1.1.0
+Version: 1.1.1
 
 File: cli.go
 
@@ -12,6 +12,7 @@ Description:
     input is properly cleaned or validated. These helpers are designed to integrate cleanly with Go CLI applications.
 
 Change Log:
+    - v1.1.X: Additional ./examples will be pushed from time to time. Point releases not referenced here are example updates only.
     - v1.1.0 (cli.go): Initial implementation of CLI input sanitization helpers using BindSanitizedFlag and BindSanitizedTextFlag.
     - v1.1.0 (release): Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
 

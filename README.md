@@ -1,5 +1,14 @@
 # goisl: Go Input Sanitization Library
 
+--- 
+
+[![Go Reference](https://pkg.go.dev/badge/github.com/derickschaefer/goisl.svg)](https://pkg.go.dev/github.com/derickschaefer/goisl)
+![Release](https://img.shields.io/github/v/release/derickschaefer/goisl)
+[![Build Status](https://github.com/derickschaefer/goisl/actions/workflows/ci.yml/badge.svg)](https://github.com/derickschaefer/goisl/actions/workflows/ci.yml)
+[![Go Report Card](https://goreportcard.com/badge/github.com/derickschaefer/goisl)](https://goreportcard.com/report/github.com/derickschaefer/goisl)
+
+--- 
+
 ## Overview
 
 `goisl` (Go Input Sanitization Library) is a lightweight, secure, and developer-friendly Go package designed to simplify input sanitization and safe output escaping. It supports three core use cases:
@@ -12,10 +21,6 @@ Inspired by WordPress’s input-handling philosophy, `goisl` encourages a “san
 
 By using `goisl`, you can reduce the risk of malformed input, injection attacks, and XSS vulnerabilities while maintaining clean, consistent input handling across your Go applications.
 
-[![Go Reference](https://pkg.go.dev/badge/github.com/derickschaefer/goisl.svg)](https://pkg.go.dev/github.com/derickschaefer/goisl)
-![Release](https://img.shields.io/github/v/release/derickschaefer/goisl)
-[![Build Status](https://github.com/derickschaefer/goisl/actions/workflows/ci.yml/badge.svg)](https://github.com/derickschaefer/goisl/actions/workflows/ci.yml)
-[![Go Report Card](https://goreportcard.com/badge/github.com/derickschaefer/goisl)](https://goreportcard.com/report/github.com/derickschaefer/goisl)
 --- 
 
 ## Platform Support

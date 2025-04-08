@@ -46,6 +46,8 @@ examples-test:
 	@go run examples/block_shorteners.go --url=https://moderncli.dev
 	@go run examples/cli_flags.go --email="alice@example.com" --url="https://example.com"
 	@go run examples/cli_flags.go --email="" --url=""                      || echo "❌ Expected failure"
+	@go run examples/german_filename.go --file="Schloßgärtenüberwachungsdienst.xlsx"
+	@go run examples/censor_profanity.go --text="What in the hell is this"
 	@go run examples/plaintext_escape.go --input="Hello, World!"
 	@go run examples/plaintext_escape.go --input="<script>alert(1)</script>"
 	@echo "✅ CLI example validations completed."

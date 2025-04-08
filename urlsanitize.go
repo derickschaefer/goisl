@@ -1,7 +1,7 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.1.0
+Version: 1.1.1
 
 File: urlsanitize.go
 
@@ -11,6 +11,7 @@ Description:
     standard URL cleaning and normalization for safe output in user interfaces.
 
 Change Log:
+    - v1.1.X: Additional ./examples will be pushed from time to time. Point releases not referenced here are example updates only.
     - v1.1.0: Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
     - v1.0.4: Rename pkg to isl and bump version numbers
     - v1.0.3: Remove conflicting license.txt file
