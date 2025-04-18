@@ -1,4 +1,4 @@
-# API Reference (v1.1.0)
+# API Reference (v1.1.2)
 
 This reference documents all available functions in the `goisl` sanitization library, including new additions in v1.1.0.
 

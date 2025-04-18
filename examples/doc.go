@@ -21,9 +21,9 @@
 //
 // Usage:
 //
-//   go run german_filename.go --file="Schloßgärtenüberwachungsdienst.xlsx"
+//	go run german_filename.go --file="Schloßgärtenüberwachungsdienst.xlsx"
 //
 // Example Output:
 //
-//   ✅ Sanitized Filename: Schlossgaertenueberwachungsdienst.xlsx
+//	✅ Sanitized Filename: Schlossgaertenueberwachungsdienst.xlsx
 package main

@@ -1,6 +1,7 @@
 package tests
 
 import (
+	"errors"
 	"os"
 	"testing"
 
@@ -68,4 +69,31 @@ func TestBindSanitizedTextFlag_Success(t *testing.T) {
 	if result != "Hello" {
 		t.Errorf("Expected 'Hello', got '%s'", result)
 	}
+}
+
+func TestMustGetPanicsOnError(t *testing.T) {
+	// Set up a pflag set to isolate test flags
+	flags := pflag.NewFlagSet("test", pflag.ContinueOnError)
+
+	// Bad sanitizer that always returns an error
+	badSanitizer := func(input string) (string, error) {
+		return "", errors.New("forced sanitizer failure")
+	}
+
+	// Bind a sanitized flag with the bad sanitizer
+	f := isl.BindSanitizedFlag("failflag", "badinput", "should fail", badSanitizer)
+	flags.Parse([]string{}) // Required to initialize pflag.String
+
+	// Defer panic check
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("Expected panic in MustGet but did not panic")
+		}
+	}()
+
+	_ = f.MustGet() // This should panic due to forced sanitizer failure
+}
+
+func stringPointer(s string) *string {
+	return &s
 }

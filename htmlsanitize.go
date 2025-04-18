@@ -1,7 +1,7 @@
 /*
 Package isl provides all escape and sanitize functions for the goisl library.
 
-Version: 1.1.1
+Version: 1.1.2
 
 File: htmlsanitize.go
 
@@ -13,6 +13,7 @@ Description:
     optional customization through user-defined tag policies.
 
 Change Log:
+    - v1.1.2: Improved unit testing coverage and fmt fixes.
     - v1.1.X: Additional ./examples will be pushed from time to time. Point releases not referenced here are example updates only.
     - v1.1.0: Added pflag integration for CLI support, custom hook examples, improved validation hooks, and expanded documentation.
     - v1.0.4: Rename pkg to isl and bump version numbers

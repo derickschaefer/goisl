@@ -27,47 +27,57 @@
 
 ---
 
-## File Structure (v1.1.0)
+## File Structure (v1.1.2)
 ```
 goisl/
 ├── LICENSE                      # MIT license
-├── README.md                    # Project overview and usage
 ├── Makefile                     # Build, test, and lint automation
-├── go.mod / go.sum              # Module definitions
+├── README.md                    # Project overview and usage
+├── go.mod / go.sum              # Go module dependencies
 ├── cli.go                       # CLI helper functions (BindSanitizedFlag)
 ├── common.go                    # Shared types and constants
 ├── doc.go                       # Package-level documentation
 ├── emailsanitize.go             # Email sanitization logic and hooks
 ├── escape.go                    # URL and text escaping functions
-├── filesanitize.go              # File name sanitization
+├── filesanitize.go              # File name sanitization logic
 ├── htmlsanitize.go              # Safe HTML sanitization
 ├── urlsanitize.go               # URL sanitization and validation
 │
-├── tests/                       # Unit tests
-│   ├── cli_flag_helpers_test.go
-│   ├── emailsanitize_test.go
-│   ├── escape_test.go
-│   ├── filesanitize_test.go
-│   ├── htmlsanitize_test.go
-│   └── urlsanitize_test.go
+├── docs/                        # Developer documentation
+│   ├── architecture.md          # Internal architecture overview
+│   └── api_reference.md         # Function-by-function documentation
 │
 ├── examples/                    # Copy-paste-ready usage patterns
 │   ├── README.md
-│   ├── cli_flags.go
-│   ├── plaintext_escape.go
-│   ├── uuid_format.go
-│   ├── twitter_handle.go
-│   ├── ip_address.go
 │   ├── api_key_format.go
+│   ├── block_shorteners.go
+│   ├── censor_profanity.go
+│   ├── cli_flags.go
 │   ├── country_code.go
-│   ├── slack_webhook.go
-│   ├── hex_token.go
+│   ├── crypto_btc_address.go
+│   ├── doc.go                   # Package documentation for examples
+│   ├── german_filename.go
 │   ├── guid_format.go
-│   └── block_shorteners.go
+│   ├── hex_token.go
+│   ├── ip_address.go
+│   ├── mask_last4.go
+│   ├── plaintext_esc           # Likely a temp/test file — consider removing
+│   ├── plaintext_escape.go
+│   ├── slack_webhook.go
+│   ├── twitter_handle.go
+│   └── uuid_format.go
 │
-└── docs/
-    ├── architecture.md          # This file
-    └── api_reference.md         # Function-by-function documentation
+└── tests/                       # Unit tests (90.4%+ coverage in v1.1.2)
+    ├── cli_flag_helpers_test.go
+    ├── common_validate_test.go
+    ├── emailsanitize_local_test.go
+    ├── emailsanitize_test.go
+    ├── escape_test.go
+    ├── filesanitize_panic_test.go
+    ├── filesanitize_test.go
+    ├── htmlsanitize_test.go
+    ├── urlsanitize_test.go
+    └── validate_protocol_test.go
 ```
 ---
 
