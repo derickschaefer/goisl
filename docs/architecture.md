@@ -27,7 +27,7 @@
 
 ---
 
-## File Structure (v1.1.2)
+## File Structure (v1.1.3)
 ```
 goisl/
 ├── LICENSE                      # MIT license
@@ -67,7 +67,7 @@ goisl/
 │   ├── twitter_handle.go
 │   └── uuid_format.go
 │
-└── tests/                       # Unit tests (90.4%+ coverage in v1.1.2)
+└── tests/                       # Unit tests (90.4%+ coverage in v1.1.3)
     ├── cli_flag_helpers_test.go
     ├── common_validate_test.go
     ├── emailsanitize_local_test.go
